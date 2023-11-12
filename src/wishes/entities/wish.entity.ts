@@ -1,21 +1,11 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-} from 'typeorm';
+import { Entity, Column, OneToMany, ManyToOne } from 'typeorm';
 import { Length, IsUrl, IsNumber, Min } from 'class-validator';
 import { User } from '../../users/entities/user.entity';
 import { Offer } from '../../offers/entities/offer.entity';
+import { BaseEntity } from '../../entities/base.entity';
 
 @Entity()
-export class Wish {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Wish extends BaseEntity {
   @Column({
     type: 'varchar',
     length: 250,
@@ -58,10 +48,4 @@ export class Wish {
 
   @OneToMany(() => Offer, (offer) => offer.item)
   offers: Offer[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

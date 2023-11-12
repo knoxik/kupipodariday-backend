@@ -1,22 +1,11 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 import { Length, IsUrl } from 'class-validator';
 import { Wish } from '../../wishes/entities/wish.entity';
 import { User } from '../../users/entities/user.entity';
+import { BaseEntity } from 'src/entities/base.entity';
 
 @Entity()
-export class Wishlist {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Wishlist extends BaseEntity {
   @Column({
     type: 'varchar',
     length: 250,
@@ -41,10 +30,4 @@ export class Wishlist {
 
   @ManyToOne(() => User, (user) => user.whishlists)
   owner: User;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

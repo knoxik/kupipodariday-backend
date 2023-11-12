@@ -24,12 +24,12 @@ export class OffersService {
     try {
       const wish = await this.wishesService.findOne(createOfferDto.itemId);
       if (user.id === wish.owner.id) {
-        throw new ForbiddenException();
+        throw new ForbiddenException('Нельзя вносить деньги на свой подарок');
       }
 
       const totalRaised = wish.raised + createOfferDto.amount;
       if (totalRaised > wish.price) {
-        throw new ForbiddenException();
+        throw new ForbiddenException('Сумма взноса превышает требуемую сумму');
       }
 
       await this.wishesService.update(createOfferDto.itemId, {
